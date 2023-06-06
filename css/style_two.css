@@ -1,0 +1,31 @@
+:root {
+  --primary: #ed2c34;
+  --secondary_two: #59ba47;
+  --secondary_three: #0051a8;
+  --secondary_four: #7fd1dd;
+  --black: #040707;
+  --gold: #f5b21f;
+}
+
+.black {
+  background-color: var(--black);
+}
+
+.btn_one {
+  background-color: var(--secondary_two);
+}
+
+.btn_two {
+  background-color: var(--gold);
+}
+
+.btn_three {
+  background-color: var(--secondary_three);
+}
+
+.btn_four {
+  background-color: var(--secondary_four);
+}
+.btn_five {
+  background-color: var(--primary);
+}

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data</title>
+
+    <link rel="stylesheet" href="css/materialize.css" />
+    <link rel="stylesheet" href="css/font-awesome.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <nav class="red darken-3">
+      <div class="row">
+        <div class="col s10">
+          <div class="top_title flexit">Check Out</div>
+        </div>
+        <div class="col s2">
+          <div class="top_title flexit">
+            <a href="index.html"><i class="fa fa-home fa-2x"></i></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main_body">
+      <div class="row parcel_form">
+        <div class="row">
+          <div class="col s12">
+            <!-- <div class="card-panel red darken-3">
+              <span class="white-text">
+                Your Details<br />
+                Name: <span id="rba_name"></span><br />
+                Phone: <span id="rba_phone"></span><br />
+                Outlet: <span id="rba_region"></span><br />
+              </span>
+              <br />
+              <a class="btn btn-small yellow darken-2" href="registration.html"
+                >Edit Details</a
+              >
+            </div> -->
+          </div>
+        </div>
+
+        <form id="data_form">
+          <input id="ba_name" name="ba_name" type="hidden" />
+          <input id="ba_phone" name="ba_phone" type="hidden" />
+          <input id="ba_region" name="ba_region" type="hidden" />
+
+          <h4 class="enter">
+            <a
+              href="#"
+              id="load_data"
+              onclick="getCheckout()"
+              class="btn btn-success block"
+              >Load Checkout</a
+            >
+          </h4>
+
+          <div id="display_data"></div>
+
+          <div class="card-panel">
+            <div class="row">
+              <div class="col s6">
+                <p>
+                  <input
+                    id="longitude"
+                    readonly
+                    placeholder="Longitude"
+                    type="text"
+                  />
+                </p>
+                <input
+                  id="latitude"
+                  readonly
+                  placeholder="Latitude"
+                  type="text"
+                />
+              </div>
+              <div class="col s6">
+                <p><a id="fetchLoc" class="btn btn-large">Load Location</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-field col s12 center_it">
+            <button
+              id="branding_btn"
+              class="btn-large margin-bottom waves-effect waves-light pick_color"
+              type="button"
+            >
+              CHECK OUT <i class="fa fa-send"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/materialize.js"></script>
+    <script type="text/javascript" src="js/sweet.js"></script>
+
+    <script type="text/javascript">
+      LINK = "https://activation.co.ke/EXP/STASOFT/scripts/";
+      LINK = "scripts/";
+
+      flashStore = window.localStorage;
+      // prefill();
+
+      getCheckout();
+
+      function appNotifier(message) {
+        swal({
+          title: message,
+          text: "",
+          icon: "warning",
+        });
+      }
+
+      $("#branding_btn").click(function (e) {
+        if (validateForm4()) {
+          serialized = $("#data_form").serialize();
+          //  var ba_name = $("#ba_name").val();
+          //                 var ba_phone = $("#ba_phone").val();
+          //                 var ba_region = $("#ba_region").val();
+          //                 var record_date = $("#record_date").val();
+          var longitude = $("#longitude").val();
+          var latitude = $("#latitude").val();
+          //             //  formData.append("record_date", record_date);
+          var formData = new FormData();
+          //                 formData.append("ba_name", ba_name);
+          //                 formData.append("ba_phone", ba_phone);
+          //                 formData.append("ba_region", ba_region);
+          //                 formData.append("record_date", record_date);
+          formData.append("latitude", latitude);
+
+          formData.append("longitude", longitude);
+
+          $.ajax({
+            type: "POST",
+            url: LINK + "CHECKOUT.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            beforeSend: function () {
+              $("#branding_btn").html(
+                '<i class="fa fa-spinner fa-spin "></i> Checkout In...'
+              );
+              console.log("Matana");
+            },
+
+            dataType: "json",
+            success: function (data) {
+              res = data.response;
+              if (res == "success") {
+                $("#branding_btn").html(
+                  '<i class="fa fa-check-circle fa-3x"></i> Check Out'
+                );
+                swal({
+                  title: "Checked Out Successfully",
+                  text: "Thank You",
+                  icon: "success",
+                });
+
+                setTimeout(function (e) {
+                  location.reload();
+                }, 2000);
+              } else {
+                console.log(data);
+              }
+            },
+            error: function (data) {
+              console.log(data);
+              swal({
+                title: "Network Error, Please try again",
+                text: "",
+                icon: "error",
+              });
+              $("#branding_btn").html(
+                '<i class="fa fa-upload fa-3x"></i> Check Out'
+              );
+            },
+          });
+        }
+
+        e.preventDefault();
+      });
+
+      // function prefill()
+      //     {
+
+      //          name= flashStore.getItem("name");
+      //           phone=flashStore.getItem("phone");
+      //           region=flashStore.getItem("region");
+      //       if (!name||!phone||!region)
+      //       {
+      //         swal("Please Register","Register to send Data","error")
+      //         setTimeout(function(){
+      //           location.href="registration.html";
+      //         },2000)
+      //       }
+      //       else
+      //       {
+
+      //           $("#ba_name").val(name);
+      //           $("#ba_phone").val(phone);
+      //           $("#ba_region").val(region);
+
+      //           $("#rba_name").text(name);
+      //           $("#rba_phone").text(phone);
+      //           $("#rba_region").text(region);
+      //       }
+
+      //     }
+
+      function validateForm4() {
+        var shouldProceed = true;
+        latitude = $("#latitude").val();
+        longitude = $("#longitude").val();
+        if (!longitude) {
+          appNotifier("Tafadhali Weka Location");
+          $("#longitude").focus();
+          shouldProceed = false;
+        }
+        if (!latitude) {
+          appNotifier("Tafadhali Weka Location");
+          $("#latitude").focus();
+          shouldProceed = false;
+        }
+
+        return shouldProceed;
+      }
+
+      function getLoc() {
+        $("#fetchLoc").html(
+          '<i class="fa fa-spinner fa-spin"></i> Fetching...'
+        );
+        navigator.geolocation.getCurrentPosition(locSuccess, locError);
+      }
+      function locSuccess(position) {
+        $("#fetchLoc").html('<i class="fa fa-check "></i> Fetched');
+        $("#latitude").val(position.coords.latitude);
+        $("#longitude").val(position.coords.longitude);
+      }
+      function locError() {
+        $("#fetchLoc").html('<i class="fa fa-cross "></i> Failed');
+        $("#latitude").val(error.code);
+        $("#longitude").val(error.message);
+      }
+      //
+      $("body").on("click", "#fetchLoc", getLoc);
+
+      function getCheckout() {
+        // var ba_phone = $("#ba_phone").val();
+        // var ba_region = $("#ba_region").val();
+        // var ba_name = $("#ba_name").val();
+
+        var formDatax = new FormData();
+        // formDatax.append("ba_name", ba_name);
+        // formDatax.append("ba_phone", ba_phone);
+        // formDatax.append("ba_region", ba_region);
+
+        $.ajax({
+          type: "POST",
+          url: LINK + "getCheckout.php",
+          data: formDatax,
+          processData: false,
+          contentType: false,
+          dataType: "json",
+          beforeSend: function () {
+            $("#load_data").html(
+              'Fetching  <i class="fa fa-spinner fa-spin"></i>'
+            );
+          },
+          success: function (server_response) {
+            $("#load_data").html(
+              'Merchandise Loaded  <i class="fa fa-check"></i>'
+            );
+
+            response = server_response.response;
+            html_code = "";
+            len = server_response.items.length;
+            if (len == 0) {
+              $("#load_data").html(
+                'Not Checked Out <i class="fa fa-cross"></i>'
+              );
+            } else {
+              $("#load_data").html(
+                'Already Checked Out  <i class="fa fa-check"></i>'
+              );
+
+              for (var key in server_response.items) {
+                t_time = server_response.items[key].t_time;
+                t_date = server_response.items[key].t_date;
+                latitude = server_response.items[key].latitude;
+                longitude = server_response.items[key].longitude;
+                html_code =
+                  html_code +
+                  '<div class="card-panel red lighten-4">Checked Out On ' +
+                  t_date +
+                  " AT " +
+                  t_time +
+                  ": " +
+                  longitude +
+                  "-" +
+                  latitude +
+                  "</div>";
+              }
+            }
+
+            $("#display_data").html(html_code);
+
+            prefill();
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            $("#get_loading").text("Loading Sheet");
+            // swal("Data Load Error", "Could not connect to the server", "error");
+          },
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Register</title>
+
+	<link rel="stylesheet" href="css/materialize.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" href="css/index.css">
+
+</head>
+<body>
+
+	<nav class="red darken-3">
+     <div class="row">
+<div class="col s10">
+    <div class=" top_title flexit">
+      Registration
+    </div>
+</div>
+<div class="col s2">
+    <div class=" top_title flexit">
+      <a href="index.html" ><i class="fa fa-home fa-2x"></i></a>
+    </div>
+</div>
+</div>
+         </nav>
+
+  <ul id="slide-out" class="sidenav">
+  	 <li class="close-it">
+  	 	<a class="sidenav-close" href="#!"><i class="fa fa-3x fa-times-circle"></i></a></li>
+    <li class="tar">
+    	<div class="user-view">
+      <div class="background">
+        <img src="images/dummy.jpg">
+      </div>
+
+      <a href="#name"><span id="profile_name" class="white-text name">BA</span></a>
+      <a href="#email"><span id="profile_stage" class="white-text email"></span></a>
+    </div>
+</li>
+
+
+
+  </ul>
+ <div class="main_body">
+  <div class="row" id="top_row">
+
+
+  <div class="row parcel_form">
+<hr>
+
+<form id="parcel_form">
+
+
+<div class="input-field col s12">
+          <span>Name</span><br>
+            <input id="re_name" placeholder="Your Name" type="text">
+
+        </div>
+
+    <div class="input-field col s12">
+          <span>Your Phone Number</span><br>
+            <input id="re_phone" placeholder="Your Phone Number" type="tel">
+    </div>
+
+    <!-- <div class="input-field col s12">
+          <span>Outlet</span><br>
+            <select class="browser-default" id="ba_region" name="ba_region">
+                        <option value="" disabled selected>Choose</option>
+                    </select>
+      </div> -->
+
+
+
+     <div class="row">
+       <div class="input-field col s6 center_it">
+        <button id="load_data" onclick="loadData()" class="btn-large  margin-bottom waves-effect waves-light pick_color" type="button">  Load Data   <i class="fa fa-refresh"></i></button>
+      </div>
+       <div class="input-field col s6 center_it">
+        <button id="register_btn" onclick="registerBA()" class="btn-large  margin-bottom waves-effect waves-light pick_color" type="button">  Save Details  <i class="fa fa-send"></i></button>
+      </div>
+     </div>
+
+
+</form>
+
+
+
+
+
+
+  </div>
+
+
+
+ </div>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/materialize.js"></script>
+<script type="text/javascript" src="js/localforage.min.js"></script>
+<script type="text/javascript" src="js/sweet.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+<script type="text/javascript">
+
+  LINK="https://activation.co.ke/EXP/STASOFT/scripts/";;
+  LINK = "scripts/";
+
+// 	// M.AutoInit();
+      flashStore=window.localStorage
+//   function prefill()
+//     {
+
+//          name= flashStore.getItem("name");
+//           phone=flashStore.getItem("phone");
+//       if (!name||!phone||!region)
+//       {
+
+//       }
+//       else
+//       {
+
+//           $("#ba_name").val(name);
+//           $("#ba_phone").val(phone);
+
+
+
+//           $("#rba_name").text(name);
+//           $("#rba_phone").text(phone);
+
+//       }
+
+
+
+//     }
+
+
+// prefill();
+//   loadData();
+flashStore=window.localStorage
+    function validateForm3 ()
+    {
+        var shouldProceed=true;
+        var  re_name = $('#re_name').val();
+        var re_phone = $('#re_phone').val();
+         if(!re_name)
+        {
+             appNotifier("Your name is required");
+             $('#name').focus();
+             shouldProceed=false;
+        }
+        else if(!re_phone)
+        {
+             appNotifier("Your Phone Number is required");
+             $('#phone').focus();
+             shouldProceed=false;
+        }
+    return shouldProceed;
+    }
+
+
+  function registerBA() {
+            var formStatus=validateForm3();
+            if (formStatus)
+            {
+
+        name = $('#re_name').val();
+        phone = $('#re_phone').val();
+        var formData =  new FormData();
+        formData.append("re_name", re_name);
+        formData.append("re_phone",re_phone);
+         flashStore.setItem("name", name);
+         flashStore.setItem("phone", phone);
+
+
+
+swal("Registration Successfull","You have been registered successfully","success")
+        setTimeout(function(){
+          location.href="index.html";
+        },2000)
+    }//vorm validator
+
+    }
+
+
+
+    function appNotifier(message)
+    {
+      swal({
+      title: message,
+      text: "",
+      icon: "warning",
+      });
+    }
+
+          name= flashStore.getItem("name");
+          phone=flashStore.getItem("phone");
+
+          $("#re_name").val(name);
+          $("#re_phone").val(phone);
+
+
+
+
+
+</script>
+</body>
+</html>

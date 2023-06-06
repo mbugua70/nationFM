@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data</title>
+
+    <link rel="stylesheet" href="css/materialize.css" />
+    <link rel="stylesheet" href="css/font-awesome.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <nav class="red darken-3">
+      <div class="row">
+        <div class="col s10">
+          <div class="top_title flexit">Challenges</div>
+        </div>
+        <div class="col s2">
+          <div class="top_title flexit">
+            <a href="index.html"><i class="fa fa-home fa-2x"></i></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main_body">
+      <div class="row parcel_form">
+        <div class="row">
+          <div class="col s12">
+            <!-- <div class="card-panel red darken-3">
+              <span class="white-text">
+                Your Details<br />
+                Name: <span id="rba_name"></span><br />
+                Phone: <span id="rba_phone"></span><br />
+                Outlet: <span id="rba_region"></span><br />
+              </span>
+              <br />
+              <a class="btn btn-small yellow darken-2" href="registration.html"
+                >Edit Details</a
+              >
+            </div> -->
+          </div>
+        </div>
+
+        <form id="data_form">
+          <input id="ba_name" name="ba_name" type="hidden" />
+          <input id="ba_phone" name="ba_phone" type="hidden" />
+          <input id="ba_region" name="ba_region" type="hidden" />
+
+          <h4 class="enter">Challenges</h4>
+
+          <div class="input-field col s12">
+            <span>Date</span>
+            <input placeholder="Record Date" type="date" id="record_date" />
+          </div>
+
+          <div class="input-field col s12">
+            <span>Challenge</span>
+            <textarea
+              class="txt"
+              rows="4"
+              placeholder="Challenge"
+              id="feedback"
+            ></textarea>
+          </div>
+
+          <div class="input-field col s12 center_it">
+            <button
+              id="branding_btn"
+              class="btn-large margin-bottom waves-effect waves-light pick_color"
+              type="button"
+            >
+              UPLOAD DATA <i class="fa fa-send"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/materialize.js"></script>
+    <script type="text/javascript" src="js/localforage.min.js"></script>
+    <script type="text/javascript" src="js/sweet.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+    <script type="text/javascript">
+      flashStore = window.localStorage;
+      // prefill();
+
+      function appNotifier(message) {
+        swal({
+          title: message,
+          text: "",
+          icon: "warning",
+        });
+      }
+
+      $("#branding_btn").click(function (e) {
+        LINK = "https://activation.co.ke/EXP/STASOFT/scripts/";
+        LINK = "scripts/";
+
+        if (validateForm4()) {
+          serialized = $("#data_form").serialize();
+          //     var ba_name = $("#ba_name").val();
+          //     var ba_phone = $("#ba_phone").val();
+          //     var ba_region = $("#ba_region").val();
+          var record_date = $("#record_date").val();
+          var feedback = $("#feedback").val();
+          //     //  formData.append("record_date", record_date);
+          var formData = new FormData();
+          //     formData.append("ba_name", ba_name);
+          //     formData.append("ba_phone", ba_phone);
+          //     formData.append("ba_region", ba_region);
+          formData.append("record_date", record_date);
+          formData.append("feedback", feedback);
+
+          $.ajax({
+            type: "POST",
+            url: LINK + "CHALLENGES.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            beforeSend: function () {
+              $("#branding_btn").html(
+                '<i class="fa fa-spinner fa-spin "></i> Uploading...'
+              );
+              console.log("Matana");
+            },
+
+            dataType: "json",
+            success: function (data) {
+              res = data.response;
+              if (res == "success") {
+                $("#branding_btn").html(
+                  '<i class="fa fa-check-circle fa-3x"></i> Upload Details'
+                );
+                swal({
+                  title: "Sent Successfully",
+                  text: "Thank You",
+                  icon: "success",
+                });
+
+                setTimeout(function (e) {
+                  $("#data_form").trigger("reset");
+                  //$("#channel").val(channel)
+                  $("#date").val(record_date);
+                  $("#outlets").val(outlets);
+                }, 2000);
+              } else {
+                console.log(data);
+              }
+            },
+            error: function (data) {
+              console.log(data);
+              swal({
+                title: "Network Error, Please try again",
+                text: "",
+                icon: "error",
+              });
+              $("#branding_btn").html(
+                '<i class="fa fa-upload fa-3x"></i> Upload'
+              );
+            },
+          });
+        }
+
+        e.preventDefault();
+      });
+
+      // function prefill() {
+      //   name = flashStore.getItem("name");
+      //   phone = flashStore.getItem("phone");
+      //   region = flashStore.getItem("region");
+      //   if (!name || !phone || !region) {
+      //     swal("Please Register", "Register to send Data", "error");
+      //     setTimeout(function () {
+      //       location.href = "registration.html";
+      //     }, 2000);
+      //   } else {
+      //     $("#ba_name").val(name);
+      //     $("#ba_phone").val(phone);
+      //     $("#ba_region").val(region);
+
+      //     $("#rba_name").text(name);
+      //     $("#rba_phone").text(phone);
+      //     $("#rba_region").text(region);
+      //   }
+      // }
+
+      function validateForm4() {
+        var shouldProceed = true;
+        jina = $("#feedback").val();
+        tarehe = $("#record_date").val();
+        if (!tarehe) {
+          appNotifier("Tafadhali Weka Tarehe");
+          $("#record_date").focus();
+          shouldProceed = false;
+        }
+        if (!jina) {
+          appNotifier("Tafadhali Weka Feedback");
+          $("#feedback").focus();
+          shouldProceed = false;
+        }
+
+        return shouldProceed;
+      }
+    </script>
+  </body>
+</html>

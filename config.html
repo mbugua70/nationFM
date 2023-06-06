@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CONFIG</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <link rel="Shortcut Icon" href="fav.png" type="image/x-icon" />
+     <link rel="stylesheet" href="sweetalert.css" type="text/css" />
+     <link rel="stylesheet" href="css/fontawesome.css" type="text/css" />
+     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+     
+
+<style type="text/css">
+	html{
+		background-color: #FFB300;
+	}
+	.my-float{
+    margin-top:22px;
+}
+
+.top_active
+{
+	width: 20%;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #E57373 !important;
+	
+}
+
+.left_menu
+{
+	font-weight: bold;
+	font-size: 14px;
+	width: 25%;
+	background-color: #03A9F4;
+	
+}
+.topmenu{
+	float: left;
+	height: 100%;
+	text-align: center;
+	color: #000;
+}
+
+.top_active
+{
+	width: 25%;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #E57373 !important;
+	
+}
+.right_menu
+{
+	font-size: 12px;
+	border-right: 2px solid #fff;
+	width: 25%;
+	background-color: #607D8B;
+	
+}
+.right_menu_1
+{
+    font-weight: bold;
+    font-size: 14px;
+    width: 20%;
+    background-color: #607D8B;
+    
+}
+
+
+.right_four{
+	font-weight: bold;
+	font-size: 20px;
+	width: 25%;
+	background-color: #009688;
+}
+
+.float{
+    position:fixed;
+    width:40px;
+    height:40px;
+    bottom:10px;
+    line-height: 40px;
+    font-size: 20px;
+    text-decoration: none;
+    left:10px;
+    background-color:#0C9;
+    color:#FFF;
+    border-radius:20px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+
+</style>
+</head>
+<body>
+	
+	<nav class="navv">  
+       <div class="row">   
+<div class="col s10">
+    <div class=" top_title flexit">
+     Configuration
+    </div>
+</div>
+<div class="col s2">
+    <div class=" top_title flexit">
+      <a href="index.html" ><i class="fa fa-home fa-2x"></i></a>
+    </div>
+</div>
+</div>
+         </nav>
+
+
+	<form class="config_form">
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr class="info">
+					<th colspan="2">
+						Merchandise Configuration
+					</th>
+				</tr>
+				
+			</thead>
+			<tbody id="generated_form">
+				
+			</tbody>
+			<tfoot>
+				<tr >
+				<td colspan="2">
+					<button id="save" class="btn btn-success">Save Changes</button>
+				</td>
+				<!--<td>
+					<button id="plus" class="btn btn-warning btn-sm"><i class="fa fa-plus"></i></button></td>-->
+			</tr>
+			</tfoot>
+			
+		</table>
+	</form>
+<!--	
+<form>
+	<table class="table">
+			<thead class="thead-dark">
+				<tr class="info" >
+					<th colspan="2">
+						Data
+					</th>
+				</tr>
+			
+				
+			</thead>
+			<tbody id="loc">
+				<tr >
+					<td >Name</td>
+					
+					<td ><input class="input form-control " type="text" name="c_name" id="c_name" placeholder="BA Name"></td>
+				</tr>
+				<tr >
+					<td >Location</td>
+					<td ><input class=" input form-control " type="text" name="c_location"
+					id="c_location" placeholder="Location"></td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+				<td colspan="2">
+					<button id="save_ba" class="btn btn-success">Save Location</button>
+				</td>
+				
+			</tr>
+			</tfoot>
+			
+		</table>
+</form>
+
+-->
+
+<form>
+	<table class="table table-bordered table-sm">
+			<thead class="thead-dark">
+				<tr  class="info">
+					<th>#</th>
+					<th>Phone</th>
+				
+					
+					<th>Prize</th>
+				</tr>
+			
+				
+			</thead>
+			<tbody id="prize_data">
+				
+			</tbody>
+			<tfoot>
+				<tr>
+				<td colspan="6">
+					<button id="btn_synch" class="btn btn-success">Upload Data</button>
+				</td>
+				
+			</tr>
+			</tfoot>
+			
+		</table>
+</form>
+	<a href="index-wheel.html" class="float">
+W
+</a>
+	<script src="js/jquery.js"></script>
+<script src="sweetalert.js"></script>
+<script src="css/bootstrap.min.js"></script>
+<script type="text/javascript">
+	c_location="";
+	c_name="";
+
+
+
+c_name="";
+c_location="";
+flashStore=window.localStorage
+prefill();
+
+ function prefill()
+    {
+      
+         name= flashStore.getItem("name");
+          phone=flashStore.getItem("phone");
+          region=flashStore.getItem("region");
+      if (!name||!phone||!region) 
+      {
+        swal("Please Register","Register to send Data","error")
+        setTimeout(function(){
+          location.href="registration.html";
+        },2000)
+      }
+      else
+      {
+         
+          $("#c_name").val(name);
+          $("#ba_phone").val(phone);
+          $("#c_location").val(region);
+
+          c_name=name;
+          c_location=region
+         
+
+       
+      }
+         
+          
+
+    }
+
+	LINK="https://activation.co.ke/EXP/scripts/";
+	////LINK="scripts/";
+	var current_end=0;
+	wheelStorage = window.localStorage;
+	var html="";
+		default_items="BANDANA*COASTER*FULL-APRON*OPENER*STRINGBAG*KITCHEN-TOWEL*T-SHIRT*HALF-APRON*JULIANA BOWL*MWIKO";
+	default_numbers="0*0*0*0*0*0*0*0*3*2";
+	user_data="";
+	if (wheelStorage.getItem("user_data") === null) 
+   {
+    user_data='{"user_data":[]}';
+    wheelStorage.setItem("user_data",user_data)
+   }
+   else
+   {
+     user_data=wheelStorage.getItem("user_data")
+   }
+   loadContent();
+
+  
+
+
+
+	if (wheelStorage.getItem("wheel_items_new") === null) {
+  wheelStorage.setItem('wheel_items_new', default_items);
+	wheelStorage.setItem('wheel_numbers', default_numbers);
+	populateForm();
+}
+else
+{
+	populateForm();
+}
+
+function populateForm()
+{
+	current_items=wheelStorage.getItem("wheel_items_new");
+	current_item_numbers=wheelStorage.getItem("wheel_numbers");
+
+	current_items_array=current_items.split("*");
+	current_item_numbers_array=current_item_numbers.split("*");
+	item_count=current_items_array.length;
+	current_end=item_count;
+
+	for (var i =0; i< item_count ; i++) {
+		//console.log(current_items_array[i]);
+		var del_button="";
+		if (i>4) 
+		{
+			del_button='<button data-position="'+i+'" class="btn btn-sm btn-danger">Delete</button>';
+		}
+
+		del_button='';
+		c_item=current_items_array[i];
+		if (c_item=="SORRY")
+		 {
+code='<tr class=" tr'+i+'"><td width="50%"><input  readonly class=" input form-control input_item" type="text" readonly placeholder="Gift Name" value="'+current_items_array[i]+'"></td><td width="50%"><input type="number" class="input form-control input_item_number" placeholder="Amount" value="'+current_item_numbers_array[i]+'"></td></tr>';
+//<td width="20%">'+del_button+'</td>
+		 }
+		 else
+		 {
+		 code='<tr class=" tr'+i+'"><td width="50%"><input class=" input form-control input_item" type="text" placeholder="Gift Name" readonly value="'+current_items_array[i]+'"></td><td width="50%"><input type="number" class="input form-control input_item_number" placeholder="Amount" value="'+current_item_numbers_array[i]+'"></td></tr>';
+		 //<td width="20%">'+del_button+'</td>	
+		 }
+		
+
+		html=html+code
+	}
+	$("#generated_form").html(html);
+}
+
+
+	$("#plus").click(function(e){
+		e.preventDefault();
+		current_end=current_end+1;
+		//del_button='<button data-position="'+current_end+'" class="btn btn-sm btn-danger"><i class="fa fa-trash"></></button>';
+		del_button='';
+		var plus_html='<tr class=" tr'+current_end+'"><td><input placeholder="Gift Name" class="input form-control  input_item input_'+current_end+'" type="text" value=""></td><td><input type="number" class="input_item_number input form-control" placeholder="Amount" value="0"></td><td>'+del_button+'</td></tr>';
+		$("#generated_form").append(plus_html);
+		 return false;   
+	})
+
+	$("#save").click(function(e){
+		e.preventDefault();
+		var new_items_array = $('.input_item').map(function() {
+    return this.value;
+}).get();
+
+console.log(new_items_array)
+
+		var new_number_array = $('.input_item_number').map(function() {
+    return this.value;
+}).get();
+		console.log(new_number_array)
+		wheelStorage.setItem('wheel_items_new', new_items_array.join("*"));
+		wheelStorage.setItem('wheel_numbers', new_number_array.join("*"));
+
+
+swal("UPDATED","","success")
+
+setTimeout(function(args) {
+	location.reload();
+}, 1000)
+
+
+
+		 return false;   
+	})
+
+	$("#save_ba").click(function(e){
+		e.preventDefault();
+
+ c_name = $('#c_name').val();
+ c_location = $('#c_location').val();
+
+	wheelStorage.setItem('c_name', c_name);
+	wheelStorage.setItem('c_location', c_location);
+
+
+
+
+	});
+
+	 $('#generated_form').on('click', '.del_button', function(e) {
+		e.preventDefault();
+
+		
+		var pos=$(this).data("position");
+		$(".tr"+pos).remove();
+		  
+	})
+
+	 function loadContent()
+	 {
+	 	var dat = JSON.parse(user_data);
+//console.log(data);
+	 	 html_code="";
+
+i=0;
+for(var key in dat.user_data) {
+    // if it's not something from the prototype
+   
+    
+    if(dat.user_data.hasOwnProperty(key)) 
+    {
+        sku=dat.user_data[key].sku;
+        gender=dat.user_data[key].gender; 
+        phone=dat.user_data[key].phone;
+        age=dat.user_data[key].age;
+        current_id=dat.user_data[key].current_id;
+        prize=dat.user_data[key].prize;
+        status=dat.user_data[key].status;
+         email=dat.user_data[key].email;
+        i++;
+        if (status==0) 
+        {
+        	 html_code=html_code+'<tr class="table-danger" ><td  >'+i+'</td><td>'+phone+'</td><td>'+prize+'</td></tr>';
+        }
+
+        else
+        {
+        	 html_code=html_code+'<tr class="table-success" ><td  >'+i+'</td><td>'+phone+'</td><td>'+prize+'</td></tr>';
+        }
+       
+        // console.log(dat2); 
+    }
+}
+$("#prize_data").html(html_code);
+
+//uploadData();
+	 }
+
+	 function uploadData()
+	 {
+	 	var dat = JSON.parse(user_data);
+	 	cur_id=0;
+	 	var for_upload = dat.user_data.filter(function (el) {
+	 		cur_id=el.current_id;
+  return el.status <= 0
+
+         
+});
+
+	 	
+	 	//updateStatus(current_id,1);
+
+
+	 	
+	 	//console.log(for_upload);
+	 }
+
+	 function updateStatus(id, new_status) {
+	 	console.log(id)
+	 	var dat = JSON.parse(user_data);
+  for (var i = 0; i < dat.user_data.length; i++) {
+  	console.log(dat.user_data[i].current_id)
+    if (dat.user_data[i].current_id == id) {
+    	//console.log(dat.user_data[i].current_id+"-popo")
+      dat.user_data[i].status = new_status;
+      //console.log(dat.user_data[i].status+"-popo")
+     // console.log(dat)
+     // return;
+    }
+  }
+  //console.log(dat)
+  user_data=JSON.stringify(dat);
+  wheelStorage.setItem("user_data",JSON.stringify(dat))
+ // loadContent()
+}
+
+ $('#btn_synch').click(function(e){
+		e.preventDefault();
+		//uploadData()
+		sendOnline();
+	})
+
+ function sendOnline()
+ {
+ 	var dat = JSON.parse(user_data);
+	 	cur_id=0;
+	 	var for_upload = dat.user_data.filter(function (el) {
+	 		cur_id=el.current_id;
+  return el.status <= 0
+
+         
+});
+
+	 	if (c_location=="" || c_name=="") 
+  {
+    swal("PLEASE UPDATE YOUR LOCATION DETAILS","","error")
+  }
+  else
+  {
+
+ 	serialized="json="+JSON.stringify(for_upload)+"&c_name="+c_name+"&c_location="+c_location;
+       $.ajax({
+            type: "POST",
+            url: LINK+"new_record.php",
+            data: serialized,
+            dataType: 'json',
+            beforeSend:  function() {
+            $('#btn_synch').html('Uploading');
+           
+            },
+            success: function(server_response)
+            {
+              
+              $('#btn_synch').html('DONE');
+              response=server_response.response.response;
+             
+    if (response=="success") 
+        {     
+          ids=server_response.ids;
+          var up_data = JSON.parse(ids);
+count_o=0;
+          for(var key in up_data) {
+     //alert(data.dates[key].timeStamp); 
+     console.log(up_data[key]);
+     updateStatus(up_data[key],1)
+     count_o++;
+}
+
+swal(count_o+" RECORDS UPLOADED SUCCESSFULLY","","success");
+
+ setTimeout(function(){
+location.reload()
+
+                    }, 3000);
+
+         // console.log(datY);
+        }
+      
+     
+        else  
+        {
+        	swal("RECORDS NOT UPLOADED","TRY AGAIN LATER","danger"); 
+          console.log(server_response)
+        }
+      }
+      });
+   }
+ }
+
+
+</script>
+</body>
+</html>

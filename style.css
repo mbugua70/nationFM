@@ -1,0 +1,65 @@
+:root {
+  --primary: #ed2c34;
+  --secondary: #f5b21f;
+  --secondary_two: #0e5d99;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.card-panel {
+  border-radius: 6px;
+  margin: 4.5rem auto;
+  width: 90%;
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+.button_style {
+  padding: 0;
+}
+
+.btn_style {
+  margin-top: 1.5rem;
+  width: 50%;
+  background-color: var(--secondary_two);
+  border-radius: 6px;
+}
+
+.btn_style:hover {
+  background-color: var(--secondary_two);
+}
+
+.form_style input::placeholder {
+  font-size: 18px;
+}
+
+@media only screen and (max-width: 768px) {
+  .card-panel {
+    min-height: 70%;
+  }
+
+  .form_style {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    align-items: center;
+  }
+}
